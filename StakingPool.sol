@@ -892,6 +892,7 @@ contract StakingPool is Ownable, ReentrancyGuard {
         // very high values of rewardRate in the earned and rewardsPerToken functions;
         // Reward + leftover must be less than 2^256 / 10^18 to avoid overflow.
         uint256 balance = rewardsToken.balanceOf(address(this));
+        if(address(rewardsToken) == address(stakingToken)) { balance = balance.sub(_totalSupply); }
         require(
             rewardRate <= balance.div(duration),
             "Provided reward too high"
